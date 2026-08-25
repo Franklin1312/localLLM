@@ -2,11 +2,27 @@ import { Task, ModelRegistryItem, NetworkTelemetry, AuditLog, KnowledgeDocument 
 
 const API_BASE = "http://127.0.0.1:8000/api/v1";
 
-function getAuthHeader(): Record<string, string> {
+async function ensureAuthHeader(): Promise<Record<string, string>> {
   if (typeof window !== "undefined") {
-    const token = localStorage.getItem("sovereign_token");
+    let token = localStorage.getItem("sovereign_token");
     if (token) {
       return { Authorization: `Bearer ${token}` };
+    }
+    // Auto-authenticate with default MRPL engineer demo account if no session exists
+    try {
+      const res = await fetch(`${API_BASE}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: "engineer@mrpl.co.in", password: "mrpl2026" }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        localStorage.setItem("sovereign_token", data.access_token);
+        localStorage.setItem("sovereign_user", JSON.stringify(data.user));
+        return { Authorization: `Bearer ${data.access_token}` };
+      }
+    } catch (e) {
+      // Backend might be offline
     }
   }
   return {};
@@ -24,11 +40,16 @@ export const api = {
       const err = await res.json();
       throw new Error(err.detail || "Authentication failed");
     }
-    return res.json();
+    const data = await res.json();
+    if (typeof window !== "undefined") {
+      localStorage.setItem("sovereign_token", data.access_token);
+      localStorage.setItem("sovereign_user", JSON.stringify(data.user));
+    }
+    return data;
   },
 
   async getMe() {
-    const headers: Record<string, string> = { ...getAuthHeader() };
+    const headers = await ensureAuthHeader();
     const res = await fetch(`${API_BASE}/auth/me`, {
       headers,
     });
@@ -38,21 +59,21 @@ export const api = {
 
   // Tasks
   async createTask(formData: FormData): Promise<Task> {
-    const headers: Record<string, string> = { ...getAuthHeader() };
+    const headers = await ensureAuthHeader();
     const res = await fetch(`${API_BASE}/tasks`, {
       method: "POST",
       headers,
       body: formData,
     });
     if (!res.ok) {
-      const err = await res.json();
+      const err = await res.json().catch(() => ({ detail: "Network error connecting to FastAPI backend" }));
       throw new Error(err.detail || "Failed to create task");
     }
     return res.json();
   },
 
   async listTasks(): Promise<Task[]> {
-    const headers: Record<string, string> = { ...getAuthHeader() };
+    const headers = await ensureAuthHeader();
     const res = await fetch(`${API_BASE}/tasks`, {
       headers,
     });
@@ -61,7 +82,7 @@ export const api = {
   },
 
   async getTask(taskId: string): Promise<Task> {
-    const headers: Record<string, string> = { ...getAuthHeader() };
+    const headers = await ensureAuthHeader();
     const res = await fetch(`${API_BASE}/tasks/${taskId}`, {
       headers,
     });
@@ -71,7 +92,7 @@ export const api = {
 
   // Models
   async listModels(): Promise<ModelRegistryItem[]> {
-    const headers: Record<string, string> = { ...getAuthHeader() };
+    const headers = await ensureAuthHeader();
     const res = await fetch(`${API_BASE}/models`, {
       headers,
     });
@@ -80,7 +101,8 @@ export const api = {
   },
 
   async registerModel(modelData: any): Promise<ModelRegistryItem> {
-    const headers: Record<string, string> = { "Content-Type": "application/json", ...getAuthHeader() };
+    const authHeaders = await ensureAuthHeader();
+    const headers = { "Content-Type": "application/json", ...authHeaders };
     const res = await fetch(`${API_BASE}/models`, {
       method: "POST",
       headers,
@@ -94,7 +116,8 @@ export const api = {
   },
 
   async dryRunRoute(prompt: string, hasAttachment: boolean): Promise<any> {
-    const headers: Record<string, string> = { "Content-Type": "application/json", ...getAuthHeader() };
+    const authHeaders = await ensureAuthHeader();
+    const headers = { "Content-Type": "application/json", ...authHeaders };
     const res = await fetch(`${API_BASE}/models/route`, {
       method: "POST",
       headers,
@@ -106,7 +129,7 @@ export const api = {
 
   // Knowledge
   async listDocuments(): Promise<KnowledgeDocument[]> {
-    const headers: Record<string, string> = { ...getAuthHeader() };
+    const headers = await ensureAuthHeader();
     const res = await fetch(`${API_BASE}/knowledge/documents`, {
       headers,
     });
@@ -115,7 +138,8 @@ export const api = {
   },
 
   async searchKnowledge(query: string): Promise<any[]> {
-    const headers: Record<string, string> = { "Content-Type": "application/json", ...getAuthHeader() };
+    const authHeaders = await ensureAuthHeader();
+    const headers = { "Content-Type": "application/json", ...authHeaders };
     const res = await fetch(`${API_BASE}/knowledge/search`, {
       method: "POST",
       headers,
@@ -127,7 +151,7 @@ export const api = {
 
   // Tools
   async listTools(): Promise<any[]> {
-    const headers: Record<string, string> = { ...getAuthHeader() };
+    const headers = await ensureAuthHeader();
     const res = await fetch(`${API_BASE}/tools`, {
       headers,
     });
@@ -137,7 +161,7 @@ export const api = {
 
   // Security & Audit
   async getNetworkTelemetry(): Promise<NetworkTelemetry> {
-    const headers: Record<string, string> = { ...getAuthHeader() };
+    const headers = await ensureAuthHeader();
     const res = await fetch(`${API_BASE}/security/network-telemetry`, {
       headers,
     });
@@ -146,7 +170,7 @@ export const api = {
   },
 
   async listAuditLogs(): Promise<AuditLog[]> {
-    const headers: Record<string, string> = { ...getAuthHeader() };
+    const headers = await ensureAuthHeader();
     const res = await fetch(`${API_BASE}/security/audit-logs`, {
       headers,
     });
@@ -155,7 +179,7 @@ export const api = {
   },
 
   async verifyAirGap(): Promise<any> {
-    const headers: Record<string, string> = { ...getAuthHeader() };
+    const headers = await ensureAuthHeader();
     const res = await fetch(`${API_BASE}/security/verify-airgap`, {
       method: "POST",
       headers,

@@ -34,6 +34,7 @@ export default function AIWorkbenchPage() {
   const [isExecuting, setIsExecuting] = useState<boolean>(false);
   const [activeDemo, setActiveDemo] = useState<number | null>(null);
   const [routingPreview, setRoutingPreview] = useState<any>(null);
+  const [execError, setExecError] = useState<string | null>(null);
   const [recentTasks, setRecentTasks] = useState<Task[]>([]);
 
   useEffect(() => {
@@ -63,6 +64,7 @@ export default function AIWorkbenchPage() {
 
   const runTask = async (taskPrompt: string, taskTypeVal: string, fileToAttach: File | null) => {
     setIsExecuting(true);
+    setExecError(null);
     const formData = new FormData();
     formData.append("prompt", taskPrompt);
     if (taskTypeVal !== "AUTO") {
@@ -95,6 +97,7 @@ export default function AIWorkbenchPage() {
     } catch (err: any) {
       setIsExecuting(false);
       setActiveDemo(null);
+      setExecError(err.message || "Cannot connect to backend server. Make sure the FastAPI backend is running at http://127.0.0.1:8000");
     }
   };
 
@@ -219,6 +222,22 @@ export default function AIWorkbenchPage() {
           </button>
         </div>
       </div>
+
+      {/* Main Error Banner if Backend is Unreachable */}
+      {execError && (
+        <div className="flex items-center justify-between p-3.5 rounded-lg bg-rose-950/70 border border-rose-600/50 text-rose-200 text-xs shadow-md animate-fade-in-up">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4 text-rose-400 shrink-0" />
+            <span>{execError}</span>
+          </div>
+          <button
+            onClick={() => setExecError(null)}
+            className="px-2 py-0.5 rounded bg-rose-900/60 hover:bg-rose-800 text-[11px] text-white font-medium"
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
 
       {/* Main Grid: Input + DAG Timeline */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
