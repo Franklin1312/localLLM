@@ -116,29 +116,45 @@
 
 ---
 
-## ⚡ Quickstart Guide
+## ⚡ Quickstart Guide (2 Execution Modes)
 
-### Prerequisites
-- **Python 3.11+** (Python 3.13 supported)
-- **Node.js 18+** and npm
-- *(Optional)* Ollama with models pulled for live GPU inference
+You can run SovereignAI Workbench in two modes depending on your workstation hardware:
 
-### Step 1 — Start the Backend
+---
+
+### 🔹 Mode 1: Instant Out-of-the-Box Demo (Zero GPU / Zero Model Pull Required)
+The project includes a **built-in On-Premise Sovereign Engine** that allows anyone to run the full multi-agent pipeline immediately without downloading 20 GB of model weights.
+
 ```bash
+# 1. Start Backend
 cd backend
 pip install -r requirements.txt
 python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
-```
-* Backend API: **http://127.0.0.1:8000**
-* Interactive Swagger Docs: **http://127.0.0.1:8000/docs**
 
-### Step 2 — Start the Frontend Studio
-```bash
-cd frontend
+# 2. Start Frontend Studio (in a new terminal)
+cd ../frontend
 npm install
 npm run dev
 ```
-* Studio UI: **http://localhost:3000**
+* **Frontend:** [http://localhost:3000](http://localhost:3000)
+* **Backend Docs:** [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+---
+
+### 🔹 Mode 2: Live Local LLM Inference (Requires GPU & Ollama)
+If your workstation has an NVIDIA GPU (e.g. RTX 3090/4090/A4000) and you want live neural token generation:
+
+1. **Install Ollama**: Download and install from [ollama.com/download](https://ollama.com/download)
+2. **Download Open-Weight Models (One-Time Setup)**:
+   ```bash
+   ollama pull qwen2.5-vl:7b      # Multimodal Vision & P&ID Drawings
+   ollama pull qwen2.5-coder:7b   # Code Execution & Sandbox
+   ollama pull deepseek-r1:7b     # Deep Chain-of-Thought Reasoning
+   ollama pull llama3.2:3b        # High-Speed SOP & Document Search
+   # (Optional) Google Gemma:
+   ollama pull gemma2:9b
+   ```
+3. **Start the Application**: The backend automatically detects Ollama running on `http://127.0.0.1:11434` and streams live weights!
 
 ---
 
