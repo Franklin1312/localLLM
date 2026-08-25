@@ -1,8 +1,9 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional
 from datetime import datetime
 
 class ModelRegistryOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: str
     name: str
     provider: str
@@ -14,9 +15,6 @@ class ModelRegistryOut(BaseModel):
     is_default: bool
     description: Optional[str] = None
     last_health_check: datetime
-
-    class Config:
-        from_attributes = True
 
 class ModelCreateRequest(BaseModel):
     id: str

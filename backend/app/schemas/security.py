@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional, List, Dict, Any
 from datetime import datetime
 
@@ -15,6 +15,7 @@ class NetworkTelemetryOut(BaseModel):
     verified_sovereign: bool
 
 class AuditLogOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: str
     user_id: Optional[str] = None
     task_id: Optional[str] = None
@@ -25,6 +26,3 @@ class AuditLogOut(BaseModel):
     external_calls_detected: int
     ip_address: str
     timestamp: datetime
-
-    class Config:
-        from_attributes = True

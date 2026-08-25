@@ -1,8 +1,9 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional, List, Any, Dict
 from datetime import datetime
 
 class AgentStepOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: str
     step_order: int
     agent_name: str
@@ -14,10 +15,8 @@ class AgentStepOut(BaseModel):
     status: str
     created_at: datetime
 
-    class Config:
-        from_attributes = True
-
 class GeneratedFileOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: str
     filename: str
     file_type: str
@@ -26,15 +25,13 @@ class GeneratedFileOut(BaseModel):
     integrity_sha256: Optional[str] = None
     created_at: datetime
 
-    class Config:
-        from_attributes = True
-
 class TaskCreate(BaseModel):
     title: Optional[str] = None
     prompt: str
-    task_type: Optional[str] = None # Auto-selected if None
+    task_type: Optional[str] = None  # Auto-selected if None
 
 class TaskOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: str
     user_id: str
     title: str
@@ -49,6 +46,3 @@ class TaskOut(BaseModel):
     completed_at: Optional[datetime] = None
     steps: List[AgentStepOut] = []
     generated_files: List[GeneratedFileOut] = []
-
-    class Config:
-        from_attributes = True

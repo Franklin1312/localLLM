@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import List
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,9 +77,7 @@ class Settings(BaseSettings):
         "http://127.0.0.1:8000",
     ]
 
-    class Config:
-        case_sensitive = True
-        env_file = ".env"
+    model_config = SettingsConfigDict(case_sensitive=True, env_file=".env", extra="allow")
 
 settings = Settings()
 

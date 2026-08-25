@@ -103,16 +103,18 @@ def run_all_checks():
 
     # 4. Live Model Registration (Extensibility Proof)
     total += 1
+    import time as _time
     try:
+        unique_id = f"test-model:{int(_time.time()) % 100000}"
         new_m = {
-            "id": f"deepseek-coder:6.7b",
-            "name": "DeepSeek Coder 6.7B",
+            "id": unique_id,
+            "name": "Test Model (Audit)",
             "provider": "Ollama (Local)",
             "capability": "CODE",
             "quantization": "Q4_K_M",
             "vram_required_gb": 4.8,
             "context_length": 16384,
-            "description": "Specialized code synthesis model."
+            "description": "Ephemeral audit test model."
         }
         status, res = test_api_post("/api/v1/models/register", new_m, token=auth_token)
         is_ok = status == 200 and res.get("id") == new_m["id"]
