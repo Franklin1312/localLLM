@@ -2,7 +2,7 @@ from typing import List, Dict, Any
 
 DEFAULT_MODELS_SEED: List[Dict[str, Any]] = [
     {
-        "id": "qwen2.5-vl:7b",
+        "id": "qwen2.5vl:7b",
         "name": "Qwen 2.5 Vision-Language (7B Instruct)",
         "provider": "ollama",
         "capability": "VISION",

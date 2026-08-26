@@ -56,3 +56,8 @@ backend/uploads/*
 !backend/uploads/.gitkeep
 backend/generated_deliverables/*
 !backend/generated_deliverables/.gitkeep
+
+# Ollama local models
+ollama_models/
+.env
+

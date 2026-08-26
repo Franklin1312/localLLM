@@ -4,44 +4,35 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { 
-  ShieldCheck, 
-  Cpu, 
-  BookOpen, 
-  Wrench, 
-  Activity, 
-  Lock, 
   Terminal,
-  UserCheck,
-  LayoutDashboard,
+  ShieldCheck,
   Sparkles,
+  UserCheck,
   Menu,
-  X,
-  Sun,
-  Moon
+  X
 } from "lucide-react";
 import { api } from "@/lib/api";
+
+const IndustrialLogo = () => (
+  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
+    {/* Base stark outline */}
+    <rect x="4" y="8" width="28" height="20" stroke="#111111" strokeWidth="3" fill="none" />
+    {/* Internal division */}
+    <rect x="18" y="8" width="14" height="20" fill="#111111" />
+    {/* Indicators */}
+    <circle cx="11" cy="18" r="3" fill="#111111" />
+    <circle cx="25" cy="18" r="3" fill="#FF4500" />
+  </svg>
+);
 
 export default function Navbar() {
   const pathname = usePathname();
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
     setMounted(true);
-    const savedTheme = localStorage.getItem("sovereign_theme") as "dark" | "light" | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      if (savedTheme === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-    } else {
-      document.documentElement.classList.add("dark");
-    }
-
     const initAuth = async () => {
       const savedUser = localStorage.getItem("sovereign_user");
       const savedToken = localStorage.getItem("sovereign_token");
@@ -72,64 +63,44 @@ export default function Navbar() {
     initAuth();
   }, []);
 
-  const toggleTheme = () => {
-    const nextTheme = theme === "dark" ? "light" : "dark";
-    setTheme(nextTheme);
-    localStorage.setItem("sovereign_theme", nextTheme);
-    if (nextTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  };
-
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [pathname]);
 
   const navItems = [
-    { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { label: "AI Workbench", href: "/", icon: Terminal },
-    { label: "Deliverables", href: "/deliverables", icon: Sparkles },
-    { label: "Model Registry", href: "/models", icon: Cpu },
-    { label: "Knowledge Base", href: "/knowledge", icon: BookOpen },
-    { label: "Tool Registry", href: "/tools", icon: Wrench },
-    { label: "Security Center", href: "/security", icon: ShieldCheck },
-    { label: "Audit Logs", href: "/audit", icon: Activity },
+    { label: "AI WORKBENCH", href: "/", icon: Terminal },
+    { label: "DELIVERABLES", href: "/deliverables", icon: Sparkles },
+    { label: "SECURITY CENTER", href: "/security", icon: ShieldCheck },
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-800 bg-[#070D18]/95 backdrop-blur-md transition-colors">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-3 sm:px-6">
-        {/* Brand & Organization */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Mobile Menu Button */}
+    <header className="sticky top-0 z-50 border-b-2 border-[#111111] bg-[#F4F4F2]">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+        
+        {/* Brand Section */}
+        <div className="flex items-center gap-3">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-800 bg-slate-900/80 text-slate-300 hover:text-white xl:hidden focus:outline-none"
-            aria-label="Toggle navigation menu"
+            className="flex h-10 w-10 items-center justify-center border-2 border-[#111111] bg-[#FFFFFF] text-[#111111] xl:hidden shadow-[2px_2px_0px_0px_rgba(17,17,17,1)] active:translate-y-0.5 active:shadow-[0px_0px_0px_0px_rgba(17,17,17,1)] transition-all rounded-none"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
 
-          <Link href="/" className="flex items-center gap-2 sm:gap-2.5">
-            <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg bg-gradient-to-br from-teal-500 to-blue-600 shadow-md shrink-0">
-              <Lock className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
-            </div>
+          <Link href="/" className="flex items-center gap-4 group">
+            <IndustrialLogo />
             <div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-xs sm:text-sm font-bold tracking-tight text-white">SovereignAI</span>
-                <span className="hidden xs:inline-block rounded bg-teal-500/10 px-1.5 py-0.2 text-[9px] font-semibold text-teal-400 border border-teal-500/30">
+              <div className="flex items-center gap-2">
+                <span className="text-sm sm:text-base font-bold tracking-tight text-[#111111] uppercase">Sovereign<span className="font-mono bg-[#111111] text-[#F4F4F2] px-1 ml-0.5">OS</span></span>
+                <span className="hidden xs:inline-block border border-[#111111] bg-[#FF4500] px-1.5 py-0.5 text-[9px] font-bold text-white tracking-wider shadow-[1px_1px_0px_0px_rgba(17,17,17,1)]">
                   AIR-GAPPED
                 </span>
               </div>
-              <p className="text-[9px] sm:text-[10px] text-slate-400 truncate max-w-[120px] sm:max-w-none">MRPL Refinery Workbench</p>
+              <p className="text-[9px] sm:text-[10px] text-[#475569] font-mono font-bold uppercase tracking-widest mt-0.5">MRPL Refinery Unit</p>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links (Large Screens) */}
-          <nav className="hidden xl:flex items-center gap-1 ml-3 border-l border-slate-800 pl-3">
+          {/* Desktop Navigation */}
+          <nav className="hidden xl:flex items-center gap-3 ml-8 border-l-2 border-[#111111] pl-8 h-8">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
@@ -137,10 +108,10 @@ export default function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-1.5 px-2 py-1.5 rounded-md text-[11px] font-medium transition-colors whitespace-nowrap ${
+                  className={`flex items-center gap-2 px-3 py-1.5 font-bold text-xs uppercase tracking-wider transition-all border-2 border-transparent ${
                     isActive
-                      ? "bg-slate-800 text-teal-300 shadow-sm border border-slate-700 font-semibold"
-                      : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
+                      ? "border-[#111111] bg-[#111111] text-[#F4F4F2] shadow-[2px_2px_0px_0px_rgba(255,69,0,1)]"
+                      : "text-[#111111] hover:bg-[#FFFFFF] hover:border-[#111111] hover:shadow-[2px_2px_0px_0px_rgba(17,17,17,1)]"
                   }`}
                 >
                   <Icon className="h-3.5 w-3.5" />
@@ -151,54 +122,32 @@ export default function Navbar() {
           </nav>
         </div>
 
-        {/* Sovereignty Proof, Theme Toggle & Persona Switcher */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5">
-          {/* Live Zero Egress Badge */}
-          <div className="flex items-center gap-1.5 rounded-full border border-teal-500/40 bg-teal-950/40 px-2 sm:px-3 py-1 text-xs text-teal-300">
-            <span className="relative flex h-2 w-2 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
-            </span>
-            <span className="font-mono font-bold text-[10px] sm:text-[11px] hidden sm:inline">EXTERNAL CALLS: 0</span>
-            <span className="font-mono font-bold text-[10px] sm:hidden">0 LEAKS</span>
+        {/* Security & Persona */}
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="hidden sm:flex items-center gap-2 border-2 border-[#111111] bg-[#111111] px-3 py-1.5">
+            <div className="h-2 w-2 bg-[#FF4500] animate-pulse"></div>
+            <span className="font-mono font-bold text-[10px] sm:text-xs text-[#F4F4F2]">0 EXTERNAL LEAKS</span>
           </div>
 
-          {/* Dark / Light Theme Toggle Button */}
-          {mounted && (
-            <button
-              onClick={toggleTheme}
-              className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg border border-slate-700 bg-slate-800/80 text-slate-300 hover:text-amber-400 hover:border-slate-600 transition shadow-sm focus:outline-none"
-              title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
-              aria-label="Toggle Theme"
-            >
-              {theme === "dark" ? (
-                <Sun className="h-4 w-4 text-amber-400 transition-transform hover:rotate-45" />
-              ) : (
-                <Moon className="h-4 w-4 text-teal-500 transition-transform hover:-rotate-12" />
-              )}
-            </button>
-          )}
-
-          {/* Persona Link */}
           <Link 
             href="/login"
-            className="flex items-center gap-1.5 sm:gap-2 rounded-lg border border-slate-700 bg-slate-800/80 px-2 sm:px-2.5 py-1.5 text-xs text-slate-300 hover:bg-slate-700 transition"
+            className="flex items-center gap-2 border-2 border-[#111111] bg-[#FFFFFF] px-3 py-1.5 hover:bg-[#F4F4F2] hover:shadow-[2px_2px_0px_0px_rgba(17,17,17,1)] transition-all shadow-[1px_1px_0px_0px_rgba(17,17,17,1)]"
           >
-            <UserCheck className="h-3.5 w-3.5 text-teal-400 shrink-0" />
-            <div className="text-left leading-none">
-              <div className="font-semibold text-white text-[10px] sm:text-[11px] truncate max-w-[70px] sm:max-w-none">
-                {currentUser?.full_name?.split(" ")[0] || "Engineer"}
+            <UserCheck className="h-4 w-4 text-[#111111] shrink-0" />
+            <div className="text-left leading-none hidden xs:block">
+              <div className="font-bold text-[#111111] text-[10px] sm:text-[11px] uppercase tracking-wide">
+                {currentUser?.full_name?.split(" ")[0] || "OPERATOR"}
               </div>
-              <div className="text-[8px] sm:text-[9px] text-slate-400 hidden xs:block">{currentUser?.role || "ENGINEER"}</div>
+              <div className="text-[8px] sm:text-[9px] text-[#FF4500] font-mono font-bold">{currentUser?.role || "ENG"}</div>
             </div>
           </Link>
         </div>
       </div>
 
-      {/* Mobile Navigation Drawer / Dropdown */}
+      {/* Mobile Nav */}
       {mobileMenuOpen && (
-        <div className="xl:hidden border-t border-slate-800 bg-[#070D18]/98 px-4 py-3 shadow-2xl animate-in slide-in-from-top-2 duration-200">
-          <nav className="grid grid-cols-2 gap-2">
+        <div className="xl:hidden border-t-2 border-[#111111] bg-[#FFFFFF] px-4 py-4 shadow-lg">
+          <nav className="grid grid-cols-1 gap-2">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
@@ -207,22 +156,18 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-2 p-2.5 rounded-lg text-xs font-medium transition ${
+                  className={`flex items-center gap-3 p-3 font-bold text-xs uppercase tracking-wider transition-all border-2 ${
                     isActive
-                      ? "bg-teal-500/10 text-teal-300 border border-teal-500/30 font-semibold"
-                      : "bg-[#0B1324] text-slate-300 hover:bg-slate-800 border border-slate-800/80"
+                      ? "border-[#111111] bg-[#111111] text-[#F4F4F2] shadow-[2px_2px_0px_0px_rgba(255,69,0,1)]"
+                      : "border-[#111111] bg-white text-[#111111] hover:bg-[#F4F4F2] shadow-[2px_2px_0px_0px_rgba(17,17,17,1)]"
                   }`}
                 >
-                  <Icon className="h-4 w-4 text-teal-400 shrink-0" />
-                  <span className="truncate">{item.label}</span>
+                  <Icon className="h-4 w-4" />
+                  {item.label}
                 </Link>
               );
             })}
           </nav>
-          <div className="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[10px] text-slate-400">
-            <span>Air-Gap Mode: <strong className="text-teal-300">STRICT</strong></span>
-            <span className="font-mono text-teal-400">100% On-Premise</span>
-          </div>
         </div>
       )}
     </header>

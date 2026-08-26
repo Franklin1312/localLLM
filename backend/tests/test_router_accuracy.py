@@ -3,7 +3,7 @@ Model Router Accuracy Benchmark Suite
 ======================================
 Evaluates the SovereignAI Router against a labeled test dataset of 20 industrial prompts
 spanning all 4 core problem statement modalities:
-1. Multimodal Document / P&ID / Inspection Analysis (qwen2.5-vl:7b)
+1. Multimodal Document / P&ID / Inspection Analysis (qwen2.5vl:7b)
 2. Code Synthesis & Telemetry Sandboxing (qwen2.5-coder:7b)
 3. Deep Reasoning & Engineering Rationale (deepseek-r1:7b)
 4. Fast SOP Search & Knowledge Retrieval (llama3.2:3b)
@@ -19,12 +19,12 @@ from app.agents.router import model_router
 
 # 20 Ground Truth Labeled Prompts
 TEST_DATASET = [
-    # Category 1: Vision / Multimodal Document (Expected: qwen2.5-vl:7b)
-    {"prompt": "Analyze the attached scanned ultrasonic thickness report for Heat Exchanger HX-401.", "has_file": True, "expected": "qwen2.5-vl:7b", "cat": "VISION_DOC"},
-    {"prompt": "Inspect the CDU-1 P&ID schematic and extract all relief valve and bypass line tags.", "has_file": True, "expected": "qwen2.5-vl:7b", "cat": "VISION_DOC"},
-    {"prompt": "Transcribe handwritten shift handover inspection notes from turnaround logsheet.", "has_file": True, "expected": "qwen2.5-vl:7b", "cat": "VISION_DOC"},
-    {"prompt": "Assess surface corrosion pitting photo on crude column pass 2 tray according to API 571.", "has_file": True, "expected": "qwen2.5-vl:7b", "cat": "VISION_DOC"},
-    {"prompt": "OCR scan of pump foundation crack inspection photograph with dimensional scale.", "has_file": True, "expected": "qwen2.5-vl:7b", "cat": "VISION_DOC"},
+    # Category 1: Vision / Multimodal Document (Expected: qwen2.5vl:7b)
+    {"prompt": "Analyze the attached scanned ultrasonic thickness report for Heat Exchanger HX-401.", "has_file": True, "expected": "qwen2.5vl:7b", "cat": "VISION_DOC"},
+    {"prompt": "Inspect the CDU-1 P&ID schematic and extract all relief valve and bypass line tags.", "has_file": True, "expected": "qwen2.5vl:7b", "cat": "VISION_DOC"},
+    {"prompt": "Transcribe handwritten shift handover inspection notes from turnaround logsheet.", "has_file": True, "expected": "qwen2.5vl:7b", "cat": "VISION_DOC"},
+    {"prompt": "Assess surface corrosion pitting photo on crude column pass 2 tray according to API 571.", "has_file": True, "expected": "qwen2.5vl:7b", "cat": "VISION_DOC"},
+    {"prompt": "OCR scan of pump foundation crack inspection photograph with dimensional scale.", "has_file": True, "expected": "qwen2.5vl:7b", "cat": "VISION_DOC"},
 
     # Category 2: Coding & Sandbox Telemetry (Expected: qwen2.5-coder:7b)
     {"prompt": "Write a Python script to process vibration telemetry CSV and detect ISO 10816-3 Zone C breaches.", "has_file": False, "expected": "qwen2.5-coder:7b", "cat": "CODE_EXEC"},

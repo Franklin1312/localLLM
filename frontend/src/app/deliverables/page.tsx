@@ -37,86 +37,84 @@ export default function DeliverablesPage() {
   );
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+    <div className="space-y-8 font-sans">
+      <div className="industrial-panel bg-[#F4F4F2] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-teal-400" />
-            Generated Sovereign Deliverables Gallery
+          <h1 className="text-xl font-extrabold text-[#111111] uppercase tracking-widest flex items-center gap-3">
+            <Sparkles className="h-6 w-6" />
+            Generated Sovereign Deliverables
           </h1>
-          <p className="text-xs text-slate-400 mt-0.5">
-            Official enterprise artifacts (.docx Approval Notes, .pptx Slide Decks, .xlsx Workbooks) synthesized by sovereign agents.
+          <p className="text-sm font-bold text-[#475569] mt-2 tracking-wide max-w-xl border-l-4 border-[#FF4500] pl-3 uppercase">
+            Official enterprise artifacts (.docx, .pptx, .xlsx) synthesized by sovereign agents.
           </p>
         </div>
-        <span className="text-xs text-slate-400 font-mono">
+        <div className="bg-[#111111] text-[#F4F4F2] px-3 py-1.5 font-mono text-xs font-bold border-2 border-[#111111] shadow-[2px_2px_0px_0px_rgba(255,69,0,1)] uppercase">
           Total Artifacts: {allFiles.length}
-        </span>
+        </div>
       </div>
 
-      <div className="rounded-xl border border-slate-800 bg-[#0B1324] p-5 shadow-sm space-y-4">
-        <div className="relative w-full sm:w-80">
-          <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-500" />
+      <div className="industrial-panel p-6 space-y-6 bg-[#F4F4F2]">
+        <div className="relative w-full sm:w-96">
+          <Search className="absolute left-3 top-3 h-4 w-4 text-[#111111]" />
           <input
             type="text"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            placeholder="Search generated deliverables..."
-            className="w-full rounded-lg border border-slate-800 bg-[#060B14] pl-9 p-2 text-xs text-slate-200 focus:border-teal-500 focus:outline-none"
+            placeholder="SEARCH GENERATED DELIVERABLES..."
+            className="industrial-input w-full pl-10 font-mono uppercase bg-white border-[#111111] focus:ring-[#FF4500] focus:border-[#111111]"
           />
         </div>
 
         {filtered.length === 0 ? (
-          <div className="py-12 text-center text-slate-500 space-y-2">
-            <FileText className="h-8 w-8 mx-auto text-slate-600" />
-            <p className="text-xs">No generated files yet. Launch Demo 1 or Demo 2 on the AI Workbench to produce real deliverables.</p>
+          <div className="py-16 text-center text-[#475569] space-y-4 border-2 border-dashed border-[#111111] bg-white">
+            <FileText className="h-10 w-10 mx-auto text-[#111111]" />
+            <p className="text-xs font-bold uppercase tracking-widest max-w-sm mx-auto">No generated files yet. Execute a workflow on the terminal to produce deliverables.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((item, idx) => {
               const { file, taskTitle, taskDate } = item;
               let Icon = FileText;
-              let colorClass = "text-blue-400";
               if (file.file_type === "DOCX") {
                 Icon = FileText;
-                colorClass = "text-blue-400";
               } else if (file.file_type === "PPTX") {
                 Icon = Presentation;
-                colorClass = "text-amber-400";
               } else if (file.file_type === "XLSX") {
                 Icon = FileSpreadsheet;
-                colorClass = "text-emerald-400";
               }
 
               return (
                 <div
                   key={idx}
-                  className="rounded-xl border border-slate-800 bg-[#070D18] p-4 space-y-3 hover:border-teal-500/50 transition flex flex-col justify-between"
+                  className="industrial-panel bg-white p-5 space-y-4 hover:shadow-[4px_4px_0px_0px_rgba(17,17,17,1)] hover:-translate-y-0.5 transition-all flex flex-col justify-between group"
                 >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Icon className={`h-6 w-6 ${colorClass}`} />
-                        <span className="font-bold text-white text-xs">{file.file_type} Deliverable</span>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between border-b-2 border-[#111111] pb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="bg-[#111111] text-white p-1.5 border-2 border-[#111111] shadow-[1px_1px_0px_0px_rgba(255,69,0,1)]">
+                           <Icon className="h-4 w-4" />
+                        </div>
+                        <span className="font-extrabold text-[#111111] text-[10px] uppercase tracking-wider">{file.file_type} File</span>
                       </div>
-                      <span className="rounded bg-teal-500/10 px-2 py-0.5 text-[9px] font-mono text-teal-400 border border-teal-500/30">
+                      <span className="bg-[#E6F4EA] px-2 py-0.5 text-[9px] font-mono font-bold text-[#137333] border-2 border-[#137333] uppercase">
                         VERIFIED
                       </span>
                     </div>
 
-                    <div className="text-xs font-bold text-white truncate">{file.filename}</div>
-                    <div className="text-[11px] text-slate-400 line-clamp-2">Task: {taskTitle}</div>
-                    <div className="text-[10px] text-slate-500 font-mono">
-                      {(file.file_size_bytes / 1024).toFixed(1)} KB • {new Date(taskDate).toLocaleDateString()}
+                    <div className="text-xs font-bold text-[#111111] truncate uppercase group-hover:text-[#FF4500] transition-colors">{file.filename}</div>
+                    <div className="text-[10px] text-[#475569] line-clamp-2 uppercase font-bold tracking-wide">TASK: {taskTitle}</div>
+                    <div className="text-[10px] text-[#111111] font-mono font-bold uppercase">
+                      SIZE: {(file.file_size_bytes / 1024).toFixed(1)} KB | {new Date(taskDate).toLocaleDateString()}
                     </div>
                   </div>
 
                   <a
                     href={api.getDownloadUrl(file.filename)}
                     download
-                    className="w-full flex items-center justify-center gap-1.5 rounded-lg bg-teal-600 py-2 text-xs font-bold text-white hover:bg-teal-500 transition shadow"
+                    className="w-full industrial-button bg-[#FF4500] text-white hover:bg-[#E63E00] py-3 text-xs"
                   >
-                    <Download className="h-3.5 w-3.5" />
-                    Download File
+                    <Download className="h-4 w-4" />
+                    EXTRACT FILE
                   </a>
                 </div>
               );

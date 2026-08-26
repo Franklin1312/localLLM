@@ -17,7 +17,7 @@ export interface AgentStep {
   tool_input?: any;
   tool_output?: any;
   thought_trace?: string;
-  status: "PENDING" | "RUNNING" | "COMPLETED" | "FAILED";
+  status: "PENDING" | "RUNNING" | "COMPLETED" | "FAILED" | "RETRY";
   created_at: string;
 }
 

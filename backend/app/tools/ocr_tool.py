@@ -82,7 +82,7 @@ class LocalOCRTool:
                     '  "instrumentation_loops": ["TI-4101", "PI-4102", "FIC-4103", "PSV-4105"],\n'
                     '  "isolation_valves": ["MOV-4101", "MOV-4102", "SB-4101"],\n'
                     '  "sop_action_aligned": "Bypass Line 6\\"-BPS-108-A1A ready for isolation upon wall thinning breach",\n'
-                    '  "extraction_engine": "qwen2.5-vl:7b (air-gapped vision model)"\n'
+                    '  "extraction_engine": "qwen2.5vl:7b (air-gapped vision model)"\n'
                     "}"
                 )
                 ocr_method = "qwen25_vl_pid_structured_extraction"

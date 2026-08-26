@@ -147,7 +147,7 @@ If your workstation has an NVIDIA GPU (e.g. RTX 3090/4090/A4000) and you want li
 1. **Install Ollama**: Download and install from [ollama.com/download](https://ollama.com/download)
 2. **Download Open-Weight Models (One-Time Setup)**:
    ```bash
-   ollama pull qwen2.5-vl:7b      # Multimodal Vision & P&ID Drawings
+   ollama pull qwen2.5vl:7b       # Multimodal Vision & P&ID Drawings
    ollama pull qwen2.5-coder:7b   # Code Execution & Sandbox
    ollama pull deepseek-r1:7b     # Deep Chain-of-Thought Reasoning
    ollama pull llama3.2:3b        # High-Speed SOP & Document Search
@@ -164,7 +164,7 @@ If your workstation has an NVIDIA GPU (e.g. RTX 3090/4090/A4000) and you want li
 * **Scenario:** Lead Refinery Engineer analyzes an ultrasonic thickness report for Heat Exchanger HX-401.
 * **Click:** **"⭐ Demo 1: Approval Note (.docx)"** on the main studio workbench.
 * **Execution:**
-  1. Router selects `qwen2.5-vl:7b`.
+  1. Router selects `qwen2.5vl:7b`.
   2. OCR extracts measured thickness: **3.18 mm** (nominal 5.00 mm).
   3. Knowledge RAG retrieves **MRPL SOP-08 §4.2** (Mandatory minimum: **3.50 mm**).
   4. Synthesizer drafts `MRPL_Approval_Note.docx` and `MRPL_Executive_Deck.pptx`.
@@ -237,4 +237,5 @@ To prove 100% data sovereignty to evaluators:
 * **Ministry:** Ministry of Petroleum and Natural Gas
 * **Theme:** Smart Automation (Software Edition)
 * **Hackathon:** Smart India Hackathon 2026
-* **Repository:** [https://github.com/HARISHPG21/sovereign-ai-workbench](https://github.com/HARISHPG21/sovereign-ai-workbench)
+* **Repository:** [https://github.com/Franklin1312/SIH2026](https://github.com/Franklin1312/SIH2026.git)
+

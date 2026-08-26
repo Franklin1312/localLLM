@@ -15,7 +15,33 @@ class ModelRouter:
     ) -> Dict[str, Any]:
         p_lower = prompt.lower()
         file_lower = (filename or "").lower()
-        
+
+        # 0. General Conversation / Short Chat (detect first, before anything else)
+        chat_keywords = [
+            "hello", "hi ", "hey ", "how are you", "what can you do",
+            "who are you", "what is this", "explain", "tell me about",
+            "what do you", "can you", "help me understand", "good morning",
+            "good evening", "thanks", "thank you", "okay", "ok", "sure",
+            "yes", "no", "please", "what is", "what are", "how does",
+            "why is", "why are", "i want to know", "describe",
+        ]
+        is_chat = (
+            not filename and
+            len(prompt.strip().split()) <= 20 and
+            (
+                len(prompt.strip()) < 80 or
+                any(kw in p_lower for kw in chat_keywords)
+            )
+        )
+        if is_chat:
+            return {
+                "task_type": "GENERAL_CHAT",
+                "selected_model": settings.DEFAULT_FAST_MODEL,
+                "model_capability": "GENERAL",
+                "reasoning": f"Short conversational query detected. Routed to fast local model ({settings.DEFAULT_FAST_MODEL}) for direct response.",
+                "estimated_vram_gb": 2.8
+            }
+
         # 1. Multimodal Document / Inspection / P&ID Image Analysis
         is_multimodal = (
             file_lower.endswith((".pdf", ".png", ".jpg", ".jpeg", ".bmp", ".tiff", ".p&id", ".dwg")) or

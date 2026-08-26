@@ -36,127 +36,128 @@ export default function SecurityPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+    <div className="space-y-8 font-sans">
+      <div className="industrial-panel p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
         <div>
-          <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <ShieldCheck className="h-5 w-5 text-teal-400" />
-            Security Center & Sovereignty Network Monitor
+          <h1 className="text-xl font-extrabold text-[#111111] uppercase tracking-widest flex items-center gap-3">
+            <ShieldCheck className="h-6 w-6" />
+            Security Center & Sovereignty Monitor
           </h1>
-          <p className="text-xs text-slate-400 mt-0.5">
-            Cryptographic air-gap monitoring. Validates that 0 external API calls and 0 egress packets leave the MRPL on-premise perimeter.
+          <p className="text-sm font-bold text-[#475569] mt-2 tracking-wide max-w-xl border-l-4 border-[#FF4500] pl-3 uppercase">
+            Cryptographic air-gap monitoring. Validates 0 external API calls and 0 egress packets leave the perimeter.
           </p>
         </div>
         <button
           onClick={handleVerifyAirGap}
           disabled={isVerifying}
-          className="flex items-center gap-2 rounded-lg bg-teal-600 px-4 py-2 text-xs font-bold text-white hover:bg-teal-500 transition shadow-md"
+          className={`industrial-button whitespace-nowrap text-xs py-3 ${isVerifying ? "bg-[#E2E8F0] text-[#475569]" : "bg-[#111111] text-white"}`}
         >
-          <RefreshCw className={`h-3.5 w-3.5 ${isVerifying ? "animate-spin" : ""}`} />
-          {isVerifying ? "Auditing Sockets..." : "Run Air-Gap Audit Probe"}
+          <RefreshCw className={`h-4 w-4 ${isVerifying ? "animate-spin" : ""}`} />
+          {isVerifying ? "AUDITING SOCKETS..." : "RUN AIR-GAP PROBE"}
         </button>
       </div>
 
       {/* Hero Sovereignty Metric Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Metric 1: External API Calls */}
-        <div className="rounded-xl border border-teal-500/40 bg-gradient-to-br from-[#081C2E] to-[#0A1624] p-5 shadow-lg space-y-2">
-          <div className="flex items-center justify-between text-slate-400 text-xs">
-            <span>EXTERNAL API CALLS</span>
-            <WifiOff className="h-4 w-4 text-teal-400" />
+        <div className="industrial-panel bg-[#F4F4F2] text-[#111111] p-6 space-y-3 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-8 h-8 bg-[#FF4500] transform translate-x-4 -translate-y-4 rotate-45"></div>
+          <div className="flex items-center justify-between text-[#111111] text-[10px] font-bold uppercase tracking-wider">
+            <span>External API Calls</span>
+            <WifiOff className="h-4 w-4" />
           </div>
-          <div className="text-3xl font-extrabold text-teal-300 font-mono">
+          <div className="text-4xl font-extrabold font-mono text-[#FF4500]">
             {telemetry?.external_api_calls ?? 0}
           </div>
-          <div className="text-[10px] text-teal-400/80 font-medium">100% Zero-Egress Verified</div>
+          <div className="text-[10px] font-mono text-[#111111] border-t-2 border-[#111111] pt-2">100% ZERO-EGRESS VERIFIED</div>
         </div>
 
         {/* Metric 2: Local AI Inference */}
-        <div className="rounded-xl border border-slate-800 bg-[#0B1324] p-5 shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-slate-400 text-xs">
-            <span>LOCAL AI INFERENCE</span>
-            <Lock className="h-4 w-4 text-blue-400" />
+        <div className="industrial-panel bg-[#F4F4F2] p-6 space-y-3">
+          <div className="flex items-center justify-between text-[#475569] text-[10px] font-bold uppercase tracking-wider">
+            <span>Local AI Inference</span>
+            <Lock className="h-4 w-4 text-[#111111]" />
           </div>
-          <div className="text-3xl font-extrabold text-white font-mono">
+          <div className="text-4xl font-extrabold text-[#111111] font-mono">
             {telemetry?.local_ai_inference_pct ?? 100}%
           </div>
-          <div className="text-[10px] text-slate-400">Air-gapped GPU Serving</div>
+          <div className="text-[10px] font-mono text-[#111111] border-t-2 border-[#111111] pt-2">AIR-GAPPED GPU SERVING</div>
         </div>
 
         {/* Metric 3: Blocked Egress Attempts */}
-        <div className="rounded-xl border border-slate-800 bg-[#0B1324] p-5 shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-slate-400 text-xs">
-            <span>BLOCKED OUTBOUND</span>
-            <AlertCircle className="h-4 w-4 text-amber-400" />
+        <div className="industrial-panel bg-[#F4F4F2] p-6 space-y-3">
+          <div className="flex items-center justify-between text-[#111111] text-[10px] font-bold uppercase tracking-wider">
+            <span>Blocked Outbound</span>
+            <AlertCircle className="h-4 w-4 text-[#FF4500]" />
           </div>
-          <div className="text-3xl font-extrabold text-white font-mono">
+          <div className="text-4xl font-extrabold text-[#111111] font-mono">
             {telemetry?.blocked_outbound_attempts ?? 0}
           </div>
-          <div className="text-[10px] text-slate-400">Sandbox Egress Violations: 0</div>
+          <div className="text-[10px] font-mono text-[#FF4500] font-bold border-t-2 border-[#111111] pt-2">SANDBOX EGRESS VIOLATIONS: 0</div>
         </div>
 
         {/* Metric 4: Total Local Operations */}
-        <div className="rounded-xl border border-slate-800 bg-[#0B1324] p-5 shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-slate-400 text-xs">
-            <span>TOTAL LOCAL OPS</span>
-            <Activity className="h-4 w-4 text-purple-400" />
+        <div className="industrial-panel bg-[#F4F4F2] p-6 space-y-3">
+          <div className="flex items-center justify-between text-[#475569] text-[10px] font-bold uppercase tracking-wider">
+            <span>Total Local Ops</span>
+            <Activity className="h-4 w-4 text-[#111111]" />
           </div>
-          <div className="text-3xl font-extrabold text-white font-mono">
+          <div className="text-4xl font-extrabold text-[#111111] font-mono">
             {telemetry?.total_local_requests ?? 0}
           </div>
-          <div className="text-[10px] text-slate-400">All Handled On-Premise</div>
+          <div className="text-[10px] font-mono text-[#111111] border-t-2 border-[#111111] pt-2">ALL HANDLED ON-PREMISE</div>
         </div>
       </div>
 
       {/* Verification Probe Result Alert */}
       {verificationResult && (
-        <div className="rounded-xl border border-teal-500/50 bg-[#061824] p-4 text-xs flex items-center justify-between shadow-md">
+        <div className="industrial-panel bg-[#E6F4EA] p-5 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <CheckCircle className="h-5 w-5 text-teal-400" />
+            <CheckCircle className="h-6 w-6 text-[#137333]" />
             <div>
-              <span className="font-bold text-teal-300 text-sm">{verificationResult.status}: </span>
-              <span className="text-slate-200">{verificationResult.message}</span>
+              <span className="font-extrabold text-[#137333] text-sm uppercase tracking-wider">{verificationResult.status}: </span>
+              <span className="text-[#137333] font-bold tracking-wide uppercase">{verificationResult.message}</span>
             </div>
           </div>
-          <span className="rounded bg-teal-500/20 px-2.5 py-1 text-[11px] font-mono font-bold text-teal-300">
+          <span className="bg-white border-2 border-[#137333] px-3 py-1.5 text-[10px] font-mono font-bold text-[#137333] uppercase">
             AUDIT RECORDED
           </span>
         </div>
       )}
 
       {/* Active Socket Inspection Table */}
-      <div className="rounded-xl border border-slate-800 bg-[#0B1324] p-5 shadow-sm space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-            <Activity className="h-4 w-4 text-teal-400" />
-            Active Host & Process Socket Bindings
+      <div className="industrial-panel bg-[#F4F4F2] p-0 overflow-hidden">
+        <div className="p-5 flex items-center justify-between border-b-2 border-[#111111] bg-[#F4F4F2]">
+          <h2 className="text-sm font-extrabold uppercase tracking-widest text-[#111111] flex items-center gap-3">
+            <Activity className="h-5 w-5 text-[#FF4500]" />
+            Active Host & Process Sockets
           </h2>
-          <span className="text-[10px] text-slate-400 font-mono">
-            Active Local Sockets: {telemetry?.active_local_sockets ?? 0}
+          <span className="bg-[#111111] text-white px-3 py-1 text-[10px] font-mono font-bold uppercase">
+            SOCKS: {telemetry?.active_local_sockets ?? 0}
           </span>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="border-b border-slate-800 text-slate-400 uppercase text-[10px]">
+        <div className="overflow-x-auto bg-[#F4F4F2] p-5">
+          <table className="w-full text-left bg-white">
+            <thead className="bg-[#111111] text-[#F4F4F2]">
               <tr>
-                <th className="py-2.5 px-3">Protocol</th>
-                <th className="py-2.5 px-3">Local Address</th>
-                <th className="py-2.5 px-3">Remote Address</th>
-                <th className="py-2.5 px-3">Status</th>
-                <th className="py-2.5 px-3">Air-Gap Egress Check</th>
+                <th className="px-3 py-2 border border-[#111111]">Protocol</th>
+                <th className="px-3 py-2 border border-[#111111]">Local Address</th>
+                <th className="px-3 py-2 border border-[#111111]">Remote Address</th>
+                <th className="px-3 py-2 border border-[#111111]">Status</th>
+                <th className="px-3 py-2 border border-[#111111]">Air-Gap Check</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300 font-mono">
+            <tbody className="font-mono text-xs font-bold text-[#111111] uppercase">
               {telemetry?.connections?.map((conn, idx) => (
-                <tr key={idx} className="hover:bg-slate-800/30 transition">
-                  <td className="py-2.5 px-3">{conn.type}</td>
-                  <td className="py-2.5 px-3 text-teal-300">{conn.local_address}</td>
-                  <td className="py-2.5 px-3 text-slate-400">{conn.remote_address}</td>
-                  <td className="py-2.5 px-3 text-slate-300">{conn.status}</td>
-                  <td className="py-2.5 px-3">
-                    <span className="rounded bg-teal-500/10 px-2 py-0.5 text-[10px] font-sans font-semibold text-teal-400 border border-teal-500/30">
-                      Local Only (Verified)
+                <tr key={idx} className="hover:bg-[#E2E8F0] transition">
+                  <td className="px-3 py-2 border border-[#111111]">{conn.type}</td>
+                  <td className="px-3 py-2 border border-[#111111]">{conn.local_address}</td>
+                  <td className="px-3 py-2 border border-[#111111]">{conn.remote_address}</td>
+                  <td className="px-3 py-2 border border-[#111111]">{conn.status}</td>
+                  <td className="px-3 py-2 border border-[#111111]">
+                    <span className="bg-[#E6F4EA] text-[#137333] border-2 border-[#137333] px-2 py-0.5 text-[10px] font-mono font-bold uppercase">
+                      LOCAL ONLY (VERIFIED)
                     </span>
                   </td>
                 </tr>

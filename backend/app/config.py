@@ -28,10 +28,11 @@ class Settings(BaseSettings):
     # Local Open-Weight Model Serving (Ollama / vLLM local endpoints)
     OLLAMA_BASE_URL: str = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
     VLLM_BASE_URL: str = os.getenv("VLLM_BASE_URL", "http://127.0.0.1:8000/v1")
-    DEFAULT_VISION_MODEL: str = "qwen2.5-vl:7b"
-    DEFAULT_CODE_MODEL: str = "qwen2.5-coder:7b"
-    DEFAULT_REASONING_MODEL: str = "deepseek-r1:7b"
-    DEFAULT_FAST_MODEL: str = "llama3.2:3b"
+    # Model assignment (all 4.7 GB or less with num_ctx=4096 — fits in 4.5 GiB VRAM)
+    DEFAULT_VISION_MODEL: str = "qwen2.5vl:7b"       # VISION  — multimodal OCR & P&ID analysis
+    DEFAULT_CODE_MODEL: str = "qwen2.5-coder:7b"     # CODE    — Python sandbox, data analysis
+    DEFAULT_REASONING_MODEL: str = "deepseek-r1:7b"  # REASONING — chain-of-thought, RCFA, proofs
+    DEFAULT_FAST_MODEL: str = "llama3.2:3b"          # GENERAL — RAG lookup, chat, summaries
 
     # ── Model Concurrency Strategy (Gap 1.1 fix) ──────────────────────────────
     # PS SIH26117 requires multiple open-weight models with auto-routing.
@@ -49,7 +50,7 @@ class Settings(BaseSettings):
     #   • Future: GGUF Q4_K_M variants of all 4 models sized to coexist in 24 GB.
     #
     # Model Licenses (deployment safety):
-    #   • qwen2.5-vl:7b         — Apache 2.0 ✅ (commercial/PSU safe)
+    #   • qwen2.5vl:7b          — Apache 2.0 ✅ (commercial/PSU safe)
     #   • qwen2.5-coder:7b      — Apache 2.0 ✅ (commercial/PSU safe)
     #   • deepseek-r1:7b        — MIT ✅ (commercial/PSU safe)
     #   • llama3.2:3b           — Llama 3 Community License ⚠️
@@ -58,7 +59,7 @@ class Settings(BaseSettings):
     #
     # Pre-air-gap model weight download (Gap 3.b):
     #   Model weights are downloaded ONCE before network isolation:
-    #     ollama pull qwen2.5-vl:7b && ollama pull qwen2.5-coder:7b
+    #     ollama pull qwen2.5vl:7b && ollama pull qwen2.5-coder:7b
     #     ollama pull deepseek-r1:7b && ollama pull llama3.2:3b
     #   After pull, Ollama runs fully offline. The network interface can then
     #   be physically disabled (unplugged / Wi-Fi off) for air-gap enforcement.

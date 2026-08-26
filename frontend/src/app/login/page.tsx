@@ -83,86 +83,91 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto py-6 sm:py-10 px-2 sm:px-4 space-y-6">
-      <div className="text-center space-y-2">
-        <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-blue-600 shadow-lg mb-1">
-          <Lock className="h-6 w-6 text-white" />
+    <div className="max-w-2xl mx-auto py-6 sm:py-10 px-2 sm:px-4 space-y-8 font-sans">
+      <div className="text-center space-y-4">
+        <div className="inline-flex h-14 w-14 items-center justify-center bg-[#111111] border-2 border-[#111111] shadow-[2px_2px_0px_0px_rgba(255,69,0,1)] mb-2">
+          <Lock className="h-7 w-7 text-[#F4F4F2]" />
         </div>
-        <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">SovereignAI Authentication</h1>
-        <p className="text-xs text-slate-400 max-w-md mx-auto">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#111111] tracking-widest uppercase">Sovereign OS Auth</h1>
+        <p className="text-xs font-bold text-[#475569] max-w-md mx-auto uppercase tracking-wider">
           Role-Based Access Control (RBAC) for Mangalore Refinery and Petrochemicals Limited
         </p>
-        <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-950/40 px-3 py-1 text-[10px] font-semibold text-amber-300">
-          ⚠ DEMO ACCOUNTS ONLY — Not real MRPL credentials
+        <div className="inline-flex items-center gap-1.5 border-2 border-[#111111] bg-[#FFF9E6] px-3 py-1 text-[10px] font-extrabold text-[#111111] uppercase tracking-widest shadow-[1px_1px_0px_0px_rgba(17,17,17,1)]">
+          <ShieldCheck className="h-3.5 w-3.5 text-[#FF4500]" />
+          DEMO ACCOUNTS ONLY — No Real Credentials
         </div>
       </div>
 
       {/* Quick Persona Selector — Responsive Grid */}
-      <div className="rounded-xl border border-slate-800 bg-[#0B1324] p-4 sm:p-5 shadow-sm space-y-3">
-        <h2 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-          <UserCheck className="h-4 w-4 text-teal-400" />
+      <div className="industrial-panel bg-[#F4F4F2] p-5 sm:p-6 space-y-4">
+        <h2 className="text-xs font-extrabold uppercase tracking-widest text-[#111111] flex items-center gap-2 border-b-2 border-[#111111] pb-3">
+          <UserCheck className="h-4 w-4 text-[#FF4500]" />
           Select Sovereign Role Persona (Instant Demo Switcher)
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {personas.map((p) => (
             <div
               key={p.role}
               onClick={() => handlePersonaSelect(p)}
-              className={`p-3 rounded-lg border transition cursor-pointer flex items-center justify-between ${
+              className={`p-3 border-2 transition-all cursor-pointer flex items-center justify-between shadow-[2px_2px_0px_0px_rgba(17,17,17,1)] hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_rgba(17,17,17,1)] ${
                 email === p.email
-                  ? "border-teal-500/60 bg-teal-950/30 shadow-sm"
-                  : "border-slate-800 bg-[#080E1C] hover:border-slate-700"
+                  ? "border-[#111111] bg-[#111111] text-[#F4F4F2]"
+                  : "border-[#111111] bg-white text-[#111111]"
               }`}
             >
               <div className="truncate pr-2">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-bold text-white truncate">{p.name}</span>
-                  <span className="rounded bg-slate-800 px-1.5 py-0.2 text-[9px] font-mono text-teal-400 border border-slate-700 shrink-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-bold uppercase tracking-wider truncate">{p.name}</span>
+                  <span className={`px-1.5 py-0.5 text-[9px] font-mono font-bold border-2 shrink-0 uppercase tracking-widest ${
+                     email === p.email ? "border-[#FF4500] text-[#FF4500]" : "border-[#111111] bg-[#E2E8F0] text-[#111111]"
+                  }`}>
                     {p.role}
                   </span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-0.5 truncate">{p.dept}</div>
+                <div className={`text-[10px] mt-1 truncate uppercase font-bold tracking-wide ${email === p.email ? "text-[#E2E8F0]" : "text-[#475569]"}`}>
+                  {p.dept}
+                </div>
               </div>
-              <ArrowRight className={`h-4 w-4 shrink-0 ${email === p.email ? "text-teal-400" : "text-slate-600"}`} />
+              <ArrowRight className={`h-4 w-4 shrink-0 ${email === p.email ? "text-[#FF4500]" : "text-[#111111]"}`} />
             </div>
           ))}
         </div>
       </div>
 
       {/* Form */}
-      <form onSubmit={handleLogin} className="rounded-xl border border-slate-800 bg-[#0B1324] p-4 sm:p-5 shadow-sm space-y-4">
+      <form onSubmit={handleLogin} className="industrial-panel bg-[#F4F4F2] p-5 sm:p-6 space-y-5">
         {errorMsg && (
-          <div className="p-2.5 rounded bg-red-950/40 border border-red-500/40 text-red-300 text-xs">
+          <div className="p-3 bg-[#FCE8E6] border-2 border-[#C5221F] text-[#C5221F] text-xs font-bold uppercase tracking-wider">
             {errorMsg}
           </div>
         )}
-        <div>
-          <label className="text-xs font-semibold text-slate-300">Enterprise Email</label>
+        <div className="space-y-2">
+          <label className="text-[10px] font-extrabold uppercase tracking-widest text-[#111111]">Enterprise Email</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 w-full rounded-lg border border-slate-800 bg-[#060B14] p-2.5 text-xs text-white focus:border-teal-500 focus:outline-none"
+            className="industrial-input w-full font-mono text-sm uppercase bg-white border-[#111111] focus:ring-[#FF4500] focus:border-[#111111] shadow-[2px_2px_0px_0px_rgba(17,17,17,1)]"
             required
           />
         </div>
-        <div>
-          <label className="text-xs font-semibold text-slate-300">Air-Gap Password</label>
+        <div className="space-y-2">
+          <label className="text-[10px] font-extrabold uppercase tracking-widest text-[#111111]">Air-Gap Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 w-full rounded-lg border border-slate-800 bg-[#060B14] p-2.5 text-xs text-white focus:border-teal-500 focus:outline-none"
+            className="industrial-input w-full font-mono text-sm bg-white border-[#111111] focus:ring-[#FF4500] focus:border-[#111111] shadow-[2px_2px_0px_0px_rgba(17,17,17,1)]"
             required
           />
         </div>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-teal-500 to-blue-600 py-3 text-xs font-bold text-white hover:from-teal-400 hover:to-blue-500 transition shadow-md"
+          className="w-full industrial-button bg-[#FF4500] text-white hover:bg-[#E63E00] py-4 text-xs mt-4"
         >
-          <ShieldCheck className="h-4 w-4" />
-          {isSubmitting ? "Authenticating..." : "Authenticate Sovereign Session"}
+          <ShieldCheck className="h-5 w-5 shrink-0" />
+          {isSubmitting ? "AUTHENTICATING SESSION..." : "AUTHENTICATE SOVEREIGN SESSION"}
         </button>
       </form>
     </div>

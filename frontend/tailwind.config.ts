@@ -1,7 +1,6 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: ["class"],
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,50 +8,25 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        sovereign: {
-          blue: "#0F2B48",
-          navy: "#0A192F",
-          teal: "#0D9488",
-          amber: "#D97706",
-          emerald: "#059669",
-          crimson: "#DC2626",
-          slate: "#1E293B",
-          dark: "#080E1A"
-        }
+      fontFamily: {
+        sans: ["Sora", "sans-serif"],
+        mono: ["'JetBrains Mono'", "monospace"],
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+      colors: {
+        industrial: {
+          bone: "#F4F4F2",
+          surface: "#FFFFFF",
+          carbon: "#111111",
+          orange: "#FF4500",
+          steel: "#E2E8F0",
+          dim: "#475569",
+        },
+        background: "var(--background)",
+        foreground: "var(--foreground)",
       },
     },
   },
   plugins: [],
 };
+
 export default config;

@@ -8,22 +8,45 @@ router = APIRouter(prefix="/deliverables", tags=["Deliverables Download"])
 
 @router.get("/download/{filename}")
 async def download_file(filename: str):
-    file_path = settings.GENERATED_DIR / filename
-    if not file_path.exists():
-        # Fallback check in upload or demo directory
-        file_path = settings.DEMO_DATA_DIR / filename
-        if not file_path.exists():
-            raise HTTPException(status_code=404, detail="Requested sovereign deliverable not found.")
+    # Search in order: generated files -> uploaded files -> demo data
+    search_dirs = [
+        Path(settings.GENERATED_DIR),
+        Path(settings.UPLOAD_DIR),
+        Path(settings.DEMO_DATA_DIR),
+    ]
+    file_path = None
+    for d in search_dirs:
+        if not d.exists():
+            continue
+        # Direct match
+        candidate = d / filename
+        if candidate.exists():
+            file_path = candidate
+            break
+        # Uploaded files are stored as {user_id}_{filename}
+        for p in d.glob(f"*_{filename}"):
+            file_path = p
+            break
+        if file_path:
+            break
 
+    if not file_path:
+        raise HTTPException(status_code=404, detail="Requested file not found.")
+
+    name_lower = filename.lower()
     media_type = "application/octet-stream"
-    if filename.endswith(".docx"):
+    if name_lower.endswith(".docx"):
         media_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    elif filename.endswith(".pptx"):
+    elif name_lower.endswith(".pptx"):
         media_type = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-    elif filename.endswith(".xlsx"):
+    elif name_lower.endswith(".xlsx"):
         media_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    elif filename.endswith(".pdf"):
+    elif name_lower.endswith(".pdf"):
         media_type = "application/pdf"
+    elif name_lower.endswith(".csv"):
+        media_type = "text/csv"
+    elif name_lower.endswith(".txt"):
+        media_type = "text/plain"
 
     return FileResponse(
         path=str(file_path),

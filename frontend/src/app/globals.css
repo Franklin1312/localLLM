@@ -1,492 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: 210 40% 98%;
-  --foreground: 222 47% 11%;
-  --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
-  --primary: 173 80% 40%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222 47% 11%;
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 173 80% 40%;
-  --accent-foreground: 222 47% 11%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 173 80% 40%;
-  --radius: 0.5rem;
+@layer base {
+  body {
+    background-color: #F4F4F2;
+    color: #111111;
+    font-family: 'Sora', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
-.dark {
-  --background: 222 47% 7%;
-  --foreground: 210 40% 98%;
-  --card: 222 47% 10%;
-  --card-foreground: 210 40% 98%;
-  --primary: 217 91% 60%;
-  --primary-foreground: 222 47% 11%;
-  --secondary: 217 33% 17%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217 33% 14%;
-  --muted-foreground: 215 20% 65%;
-  --accent: 173 80% 40%;
-  --accent-foreground: 210 40% 98%;
-  --border: 217 33% 18%;
-  --input: 217 33% 18%;
-  --ring: 217 91% 60%;
+@layer utilities {
+  .industrial-panel {
+    @apply bg-white border border-[#111111] rounded-none shadow-[2px_2px_0px_0px_rgba(17,17,17,1)];
+  }
+  .industrial-button {
+    @apply flex items-center justify-center gap-2 border border-[#111111] rounded-none px-4 py-2 font-bold tracking-wide transition-all shadow-[2px_2px_0px_0px_rgba(17,17,17,1)] hover:shadow-[4px_4px_0px_0px_rgba(17,17,17,1)] hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-[0px_0px_0px_0px_rgba(17,17,17,1)];
+  }
+  .industrial-input {
+    @apply rounded-none border border-[#111111] bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF4500] focus:border-[#111111] transition-shadow shadow-[1px_1px_0px_0px_rgba(17,17,17,0.2)];
+  }
 }
 
-/* Base Body Styles */
-body {
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  overflow-x: hidden;
-}
-
-html.dark body {
-  background-color: #070D18;
-  color: #F1F5F9;
-}
-
-html:not(.dark) body {
-  background-color: #F8FAFC;
-  color: #090D16;
-}
-
-/* ==========================================================================
-   Comprehensive Light Mode Overrides (html:not(.dark))
-   ========================================================================== */
-
-/* 1. Header & Navigation */
-html:not(.dark) header {
-  background-color: rgba(255, 255, 255, 0.98) !important;
-  border-bottom-color: #CBD5E1 !important;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-}
-
-html:not(.dark) header nav a {
-  color: #1E293B !important;
-  font-weight: 600;
-}
-html:not(.dark) header nav a:hover {
-  background-color: #F1F5F9 !important;
-  color: #090D16 !important;
-}
-
-/* 2. Main Containers, Cards & Boxes */
-html:not(.dark) .bg-\[\#070D18\],
-html:not(.dark) .bg-\[\#070D18\]\/95,
-html:not(.dark) .bg-\[\#070D18\]\/98,
-html:not(.dark) .bg-\[\#0B1324\],
-html:not(.dark) .bg-\[\#080E1C\],
-html:not(.dark) .bg-\[\#060B14\],
-html:not(.dark) .bg-\[\#040812\],
-html:not(.dark) .bg-\[\#050A14\] {
-  background-color: #FFFFFF !important;
-  border-color: #CBD5E1 !important;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
-}
-
-/* 3. Top Banner & Gradients */
-html:not(.dark) .bg-gradient-to-r.from-\[\#0C1A2E\].to-\[\#0A1626\] {
-  background-image: linear-gradient(to right, #FFFFFF, #F1F5F9) !important;
-  border-color: #CBD5E1 !important;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-}
-
-html:not(.dark) .bg-gradient-to-br.from-\[\#09182A\].to-\[\#0B1526\],
-html:not(.dark) .bg-gradient-to-br.from-\[\#081C2E\].to-\[\#0A1624\] {
-  background-image: linear-gradient(to bottom right, #FFFFFF, #F8FAFC) !important;
-  border-color: #CBD5E1 !important;
-}
-
-/* 4. Quick Demo Launcher Buttons */
-html:not(.dark) .border-teal-500\/50.bg-teal-950\/60,
-html:not(.dark) .bg-teal-950\/60 {
-  background-color: #F0FDF4 !important;
-  color: #065F46 !important;
-  border-color: #5EEAD4 !important;
-  font-weight: 700;
-}
-html:not(.dark) .border-teal-500\/50.bg-teal-950\/60:hover {
-  background-color: #CCFBF1 !important;
-  color: #044E38 !important;
-}
-
-html:not(.dark) .border-blue-500\/50.bg-blue-950\/60,
-html:not(.dark) .bg-blue-950\/60 {
-  background-color: #EFF6FF !important;
-  color: #1E40AF !important;
-  border-color: #93C5FD !important;
-  font-weight: 700;
-}
-html:not(.dark) .border-blue-500\/50.bg-blue-950\/60:hover {
-  background-color: #DBEAFE !important;
-  color: #1E3A8A !important;
-}
-
-html:not(.dark) .border-purple-500\/50.bg-purple-950\/60,
-html:not(.dark) .bg-purple-950\/60 {
-  background-color: #FAF5FF !important;
-  color: #6B21A8 !important;
-  border-color: #D8B4FE !important;
-  font-weight: 700;
-}
-html:not(.dark) .border-purple-500\/50.bg-purple-950\/60:hover {
-  background-color: #F3E8FF !important;
-  color: #581C87 !important;
-}
-
-/* 5. Generic Buttons & Refresh / Action Buttons */
-html:not(.dark) button.bg-slate-800,
-html:not(.dark) .bg-slate-800,
-html:not(.dark) .bg-slate-800\/80,
-html:not(.dark) .bg-slate-900\/80 {
-  background-color: #F1F5F9 !important;
-  color: #0F172A !important;
-  border-color: #CBD5E1 !important;
-}
-html:not(.dark) button.bg-slate-800:hover,
-html:not(.dark) .hover\:bg-slate-800:hover,
-html:not(.dark) .hover\:bg-slate-700:hover {
-  background-color: #E2E8F0 !important;
-  color: #020617 !important;
-}
-
-/* 6. Clickable Cards & List Items (Hover States) */
-html:not(.dark) .hover\:bg-slate-800\/60:hover,
-html:not(.dark) .hover\:bg-slate-800\/50:hover,
-html:not(.dark) .hover\:bg-slate-800\/30:hover {
-  background-color: #F8FAFC !important;
-  border-color: #94A3B8 !important;
-}
-
-/* 7. Deep High-Contrast Typography & Text Colors */
-html:not(.dark) h1,
-html:not(.dark) h2,
-html:not(.dark) h3,
-html:not(.dark) h4,
-html:not(.dark) h5,
-html:not(.dark) h6,
-html:not(.dark) .text-white,
-html:not(.dark) .text-slate-100,
-html:not(.dark) .text-slate-200 {
-  color: #020617 !important;
-}
-
-html:not(.dark) .text-slate-300 {
-  color: #0F172A !important;
-}
-
-html:not(.dark) .text-slate-400 {
-  color: #1E293B !important;
-}
-
-html:not(.dark) .text-slate-500 {
-  color: #334155 !important;
-}
-
-html:not(.dark) .text-slate-600 {
-  color: #1E293B !important;
-}
-
-html:not(.dark) label {
-  color: #0F172A !important;
-  font-weight: 600;
-}
-
-/* High-Visibility Accents in Light Mode */
-html:not(.dark) .text-teal-400,
-html:not(.dark) .text-teal-300 {
-  color: #047857 !important;
-  font-weight: 600;
-}
-
-html:not(.dark) .text-blue-400,
-html:not(.dark) .text-blue-300 {
-  color: #1D4ED8 !important;
-  font-weight: 600;
-}
-
-html:not(.dark) .text-purple-400,
-html:not(.dark) .text-purple-300 {
-  color: #6B21A8 !important;
-  font-weight: 600;
-}
-
-html:not(.dark) .text-amber-400,
-html:not(.dark) .text-amber-300 {
-  color: #B45309 !important;
-  font-weight: 600;
-}
-
-html:not(.dark) .text-red-400,
-html:not(.dark) .text-red-300 {
-  color: #991B1B !important;
-  font-weight: 600;
-}
-
-/* 8. Form Elements, Inputs, Textareas, Selects */
-html:not(.dark) textarea,
-html:not(.dark) select,
-html:not(.dark) input[type="text"],
-html:not(.dark) input[type="email"],
-html:not(.dark) input[type="password"] {
-  background-color: #FFFFFF !important;
-  color: #020617 !important;
-  border-color: #94A3B8 !important;
-  font-weight: 500;
-}
-html:not(.dark) textarea::placeholder,
-html:not(.dark) input::placeholder {
-  color: #64748B !important;
-}
-html:not(.dark) textarea:focus,
-html:not(.dark) select:focus,
-html:not(.dark) input:focus {
-  border-color: #0D9488 !important;
-  box-shadow: 0 0 0 1.5px #0D9488 !important;
-}
-
-/* 9. Borders Across All Elements */
-html:not(.dark) .border-slate-800,
-html:not(.dark) .border-slate-800\/80,
-html:not(.dark) .border-slate-800\/60,
-html:not(.dark) .border-slate-700 {
-  border-color: #CBD5E1 !important;
-}
-
-/* 10. Code & Pre Blocks */
-html:not(.dark) pre,
-html:not(.dark) code {
-  background-color: #F1F5F9 !important;
-  color: #020617 !important;
-  border-color: #CBD5E1 !important;
-  font-weight: 600;
-}
-
-/* 11. Badges & Pills */
-html:not(.dark) .bg-teal-950\/40,
-html:not(.dark) .bg-teal-950\/30,
-html:not(.dark) .bg-teal-500\/10,
-html:not(.dark) .bg-teal-950 {
-  background-color: #CCFBF1 !important;
-  color: #065F46 !important;
-  border-color: #2DD4BF !important;
-  font-weight: 700;
-}
-html:not(.dark) .bg-blue-900\/40,
-html:not(.dark) .bg-blue-900\/30,
-html:not(.dark) .bg-blue-950 {
-  background-color: #DBEAFE !important;
-  color: #1E40AF !important;
-  border-color: #60A5FA !important;
-  font-weight: 700;
-}
-html:not(.dark) .bg-purple-900\/40,
-html:not(.dark) .bg-purple-950 {
-  background-color: #F3E8FF !important;
-  color: #6B21A8 !important;
-  border-color: #C084FC !important;
-  font-weight: 700;
-}
-html:not(.dark) .bg-amber-950\/40,
-html:not(.dark) .bg-amber-950 {
-  background-color: #FEF3C7 !important;
-  color: #92400E !important;
-  border-color: #FCD34D !important;
-  font-weight: 700;
-}
-html:not(.dark) .bg-red-950\/40,
-html:not(.dark) .bg-red-950 {
-  background-color: #FEE2E2 !important;
-  color: #991B1B !important;
-  border-color: #FCA5A5 !important;
-  font-weight: 700;
-}
-
-/* 12. Tables */
-html:not(.dark) table thead {
-  background-color: #F1F5F9 !important;
-  border-bottom-color: #CBD5E1 !important;
-}
-html:not(.dark) table thead th {
-  color: #0F172A !important;
-  font-weight: 700;
-}
-html:not(.dark) table tbody tr {
-  border-color: #E2E8F0 !important;
-}
-html:not(.dark) table tbody tr:hover {
-  background-color: #F8FAFC !important;
-}
-html:not(.dark) table tbody td {
-  color: #0F172A !important;
-}
-
-/* 13. Modal Dialogs & Backdrops */
-html:not(.dark) .bg-black\/80 {
-  background-color: rgba(15, 23, 42, 0.55) !important;
-}
-
-/* 14. P&ID Blueprint Canvas in Light Mode */
-html:not(.dark) svg pattern path {
-  stroke: #E2E8F0 !important;
-}
-html:not(.dark) svg rect[fill="#09182A"] {
-  fill: #F1F5F9 !important;
-  stroke: #CBD5E1 !important;
-}
-html:not(.dark) svg circle[fill="#09182A"] {
-  fill: #F1F5F9 !important;
-  stroke: #CBD5E1 !important;
-}
-html:not(.dark) svg text[fill="#94A3B8"] {
-  fill: #1E293B !important;
-}
-
-/* Custom Scrollbar */
+/* Custom minimal scrollbar with industrial look */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #F4F4F2;
+  border-left: 1px solid #111111;
+}
+::-webkit-scrollbar-thumb {
+  background: #111111;
+  border: 1px solid #F4F4F2;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FF4500;
 }
 
-html.dark ::-webkit-scrollbar-track {
-  background: #0B132B;
+/* Base table styling */
+table {
+  border-collapse: collapse;
 }
-html.dark ::-webkit-scrollbar-thumb {
-  background: #1C2D4A;
-  border-radius: 3px;
+table thead th {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: #F4F4F2;
+  background-color: #111111;
+  border: 1px solid #111111;
+  padding: 0.5rem 1rem;
 }
-html.dark ::-webkit-scrollbar-thumb:hover {
-  background: #2E476E;
+table tbody tr {
+  border-bottom: 1px solid #E2E8F0;
 }
-
-html:not(.dark) ::-webkit-scrollbar-track {
-  background: #F1F5F9;
-}
-html:not(.dark) ::-webkit-scrollbar-thumb {
-  background: #94A3B8;
-  border-radius: 3px;
-}
-html:not(.dark) ::-webkit-scrollbar-thumb:hover {
-  background: #64748B;
-}
-
-.air-gap-glow {
-  box-shadow: 0 0 20px rgba(13, 148, 136, 0.35);
-}
-
-.danger-glow {
-  box-shadow: 0 0 20px rgba(220, 38, 38, 0.35);
-}
-
-/* ==========================================================================
-   Custom Animations & Visual Micro-interactions
-   ========================================================================== */
-
-/* 1. Laser Scan Line for P&ID Blueprint */
-@keyframes laser-scan {
-  0% {
-    top: 0%;
-    opacity: 0.8;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    top: 98%;
-    opacity: 0.8;
-  }
-}
-
-.animate-laser-scan {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, #14B8A6 30%, #38BDF8 50%, #14B8A6 70%, transparent 100%);
-  box-shadow: 0 0 12px #38BDF8, 0 0 24px #14B8A6;
-  animation: laser-scan 3.5s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-/* 2. Shimmer Reflection for Action Buttons */
-@keyframes button-shimmer {
-  0% {
-    transform: translateX(-100%) rotate(45deg);
-  }
-  100% {
-    transform: translateX(200%) rotate(45deg);
-  }
-}
-
-.btn-shimmer {
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-shimmer::after {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    60deg,
-    transparent 20%,
-    rgba(255, 255, 255, 0.15) 50%,
-    transparent 80%
-  );
-  transform: translateX(-100%) rotate(45deg);
-  animation: button-shimmer 4s infinite;
-  pointer-events: none;
-}
-
-/* 3. Interactive Floating Card with Glow */
-.interactive-card {
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
-}
-
-.interactive-card:hover {
-  transform: translateY(-2.5px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-}
-
-html.dark .interactive-card:hover {
-  box-shadow: 0 12px 28px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(20, 184, 166, 0.15);
-}
-
-/* 4. Active Step Glowing Pulse */
-@keyframes step-pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgba(20, 184, 166, 0);
-  }
-}
-
-.animate-step-pulse {
-  animation: step-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* 5. Smooth Fade-in-Up for Dynamic Lists */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+table tbody td {
+  padding: 0.5rem 1rem;
+  border-left: 1px solid #E2E8F0;
+  border-right: 1px solid #E2E8F0;
 }
